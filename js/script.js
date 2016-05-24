@@ -1,11 +1,10 @@
 
 function loadData() {
 
-    // obtain variables from jQuery
-    var $body = $('body');
+    // obtain variables using jQuery
     var $wikiElem = $('#wikipedia-links');
+    var $wikiContainer = $('.wikipedia-container');
     var $nyContainer = $('.nytimes-container');
-    var $nytHeaderElem = $('#nytimes-header');
     var $nytElem = $('#nytimes-articles');
     var $greeting = $('#greeting');
     var $street = $('#street').val();
@@ -16,24 +15,23 @@ function loadData() {
     $wikiElem.text("");
     $nytElem.text("");
 
-    // Once address is submitted, fonts change to white, a new greeting message appears and
+    // Once address is submitted, a new greeting message appears and
     // and the Google street view of the address appears as the background
     var message = "Want to check out " + $street + ",<br> " + $city + "?";
+    var apiURL = "http://maps.googleapis.com/maps/api/streetview?size=600x400&location=" + $address + "\"";
     $greeting.html(message).css("color", "#ffffff");
     $nyContainer.css("color", "#ffffff");
-    $('.wikipedia-container').css("color", "#ffffff");
-
-    var apiURL = "http://maps.googleapis.com/maps/api/streetview?size=600x400&location=" + $address + "\"";
+    $wikiContainer.css("color", "#ffffff");
     $('.bgimage').attr("src", apiURL);
-    // $body.append('<img class="bgimage" src="http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' +
-    //     $address + '">');
-
 
     // Set NY Times Article Search URL using obtained API key and submitted city
     var apikey = '67765b4f2ce9410682abdec14f35a93e';
-    var URL = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + $city + '&api-key=' + apikey;
+    var nytURL = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + $city + '&api-key=' + apikey;
+
+    // AJAX GET request. Response displays NY Times article links and snippets
+    // and wikipedia links and snippets
     $.ajax({
-        url: URL,
+        url: nytURL,
         method: 'GET',
         dataType: 'json'
     }).success(function(data) {
@@ -42,13 +40,34 @@ function loadData() {
         $nytElem.css("height", "600px");
         $nytElem.css("overflow", "auto");
         $.each(data.response.docs, function(i, item) {
-            console.log(item.web_url);
-            console.log(item.headline.main);
-            $nytElem.append('<p><b>' + item.headline.main + '</b><br><a href=\"'
-                + item.web_url + '\">' + item.web_url + '</a></p>');
+            $nytElem.append('<p><b>' + item.headline.main + '</b><br>' +
+                '<a href=\"' + item.web_url + '\">' + item.web_url + '</a></p>');
         });
     }).error(function(err) {
-        throw err;
+        $nytElem.append("Could not load NY Times data!");
+    });
+
+
+    var wikiURL = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' +
+            $city + '&format=json&callback=wikiCallback';
+
+    $.ajax({
+        url: wikiURL,
+        method: 'GET',
+        dataType: 'jsonp'
+    }).success(function(response) {
+        $wikiContainer.css("height", "60px");
+        $wikiElem.css("background-color", "rgba(51, 51, 51, 0.7)");
+        $wikiElem.css("height", "600px");
+        $wikiElem.css("overflow", "auto");
+        var titles = response[1];
+        var wikiLinks = response[3];
+        console.log(titles);
+        console.log(wikiLinks[0]);
+        for(var i = 0; i < titles.length; i++) {
+            $wikiElem.append('<p><b>' + titles[i] + '</b><br>' +
+                '<a href=\"' + wikiLinks[i] + '\">' + wikiLinks[i] + '</a></p>');
+        }
     });
     return false;
 }
