@@ -17,7 +17,7 @@ function loadData() {
 
     // Once address is submitted, a new greeting message appears and
     // and the Google street view of the address appears as the background
-    var message = "Want to check out " + $street + ",<br> " + $city + "?";
+    var message = "Let's check out " + $street + ", " + $city + "!";
     var apiURL = "http://maps.googleapis.com/maps/api/streetview?size=600x400&location=" + $address + "\"";
     $greeting.html(message).css("color", "#ffffff");
     $nyContainer.css("color", "#ffffff");
