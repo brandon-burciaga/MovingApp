@@ -38,13 +38,14 @@ function loadData() {
         dataType: 'json'
     }).success(function(data) {
         $nyContainer.css("height", "60px");
-        $nytElem.css("background-color", "rgba(51, 51, 51, 0.9)");
+        $nytElem.css("background-color", "rgba(51, 51, 51, 0.7)");
         $nytElem.css("height", "600px");
         $nytElem.css("overflow", "auto");
         $.each(data.response.docs, function(i, item) {
             console.log(item.web_url);
             console.log(item.headline.main);
-            $nytElem.append('<p>' + item.headline.main + '<br>' + item.web_url + '</p>');
+            $nytElem.append('<p><b>' + item.headline.main + '</b><br><a href=\"'
+                + item.web_url + '\">' + item.web_url + '</a></p>');
         });
     }).error(function(err) {
         throw err;
