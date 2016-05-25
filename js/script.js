@@ -15,7 +15,7 @@ function getNYTimes($city, $nyContainer, $nytElem) {
     }).success(function (data) {
         $nyContainer.css("height", "60px");
         $nytElem.css("background-color", "rgba(51, 51, 51, 0.8)");
-        $nytElem.css("height", "425px");
+        $nytElem.css("height", "250px");
         $nytElem.css("overflow", "auto");
         $.each(data.response.docs, function (i, item) {
             $nytElem.append('<a href=\"' + item.web_url + '\">' + item.headline.main + '</a></p>');
@@ -47,7 +47,7 @@ function getWiki($city, $wikiElem, $wikiContainer) {
         clearTimeout(timeOut);
         $wikiContainer.css("height", "60px");
         $wikiElem.css("background-color", "rgba(51, 51, 51, 0.8)");
-        $wikiElem.css("height", "425px");
+        $wikiElem.css("height", "250px");
         $wikiElem.css("overflow", "auto");
         var titles = response[1];
         var wikiLinks = response[3];
