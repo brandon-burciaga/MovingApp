@@ -5,6 +5,7 @@ Small project building a web application focusing on HTML, CSS, JS and working w
 
 ![Image could not be loaded](home.png "MovingApp_Home")
 
+![Image could not be loaded](address.png "MovingApp_Home")
 
 **MovingApp**
 
