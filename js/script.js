@@ -59,7 +59,7 @@ function getWiki($city, $wikiElem, $wikiContainer) {
     });
 }
 
-// Renders new greeting message and and the Google street view of the address appears as the background
+// Renders new greeting message and changes background to the Google street view of the address
 function setBackground($street, $city, $address, $greeting, $nyContainer, $wikiContainer) {
     var message = "Let's check out " + $street + ", " + $city + "!";
     var apiURL = "http://maps.googleapis.com/maps/api/streetview?size=600x400&location=" + $address + "\"";
