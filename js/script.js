@@ -1,6 +1,8 @@
 
-// AJAX GET request for relevant New York Times articles using New York Times API.
-// Displays headline as link to NYT page and fills an auto overflow CSS container.
+/*
+AJAX GET request for relevant New York Times articles using New York Times API.
+Displays headline as link to NYT page and fills an auto overflow CSS container.
+*/
 function getNYTimes($city, $nyContainer, $nytElem) {
 
     // Set NY Times Article Search URL using obtained API key and submitted city as parameters
@@ -25,8 +27,10 @@ function getNYTimes($city, $nyContainer, $nytElem) {
     });
 }
 
-// AJAX GET request for relevant wikipedia articles using wikipedia API.
-// Displays title as link to Wikipedia page and fills an auto overflow CSS container.
+/*
+AJAX GET request for relevant wikipedia articles using wikipedia API.
+Displays title as link to Wikipedia page and fills an auto overflow CSS container.
+*/
 function getWiki($city, $wikiElem, $wikiContainer) {
 
     // Set Wikipedia URL API using city and callback function as parameters
@@ -51,8 +55,6 @@ function getWiki($city, $wikiElem, $wikiContainer) {
         $wikiElem.css("overflow", "auto");
         var titles = response[1];
         var wikiLinks = response[3];
-        console.log(titles);
-        console.log(wikiLinks[0]);
         for (var i = 0; i < titles.length; i++) {
             $wikiElem.append('<a href=\"' + wikiLinks[i] + '\">' + titles[i] + '</a></p>');
         }
@@ -69,8 +71,10 @@ function setBackground($street, $city, $address, $greeting, $nyContainer, $wikiC
     $('.bgimage').attr("src", apiURL);
 }
 
-// Called on button submit of address and ets all variables, clears elements from old requests,
-// and calls functions setBackground(), getNYTimes() and getWiki() to render requested data
+/*
+Called on button submit of address and ets all variables, clears elements from old requests,
+and calls functions setBackground(), getNYTimes() and getWiki() to render requested data
+*/
 function loadData() {
 
     // obtain variables using jQuery
